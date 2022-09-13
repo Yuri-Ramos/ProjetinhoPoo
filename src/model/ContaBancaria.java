@@ -1,8 +1,9 @@
 package src.model;
 
+import java.util.Date;
 import java.util.InputMismatchException;
 
-public class ContaBancaria {
+public abstract class ContaBancaria {
 
    //#region atributo
     private String agencia; 
@@ -10,6 +11,7 @@ public class ContaBancaria {
     private Integer digito;
     private Double saldo;
     private Double VALOR_MINIMO_DEPOSITO =10.0;
+    private Date dataAbertura;
 
 //#endregion
     
@@ -22,15 +24,17 @@ public class ContaBancaria {
         this.conta = conta;
         this.digito = digito;
         this.saldo = saldoInicial;
+        this.dataAbertura = new Date();
+        
     }
-
-//#region
-
+    
+    //#endregion
+    
     //#region Get e Setters
-
-
-
-
+    
+    
+    
+    
     public String getAgencia() {
         return agencia;
     }
@@ -52,10 +56,16 @@ public class ContaBancaria {
     public Double getSaldo() {
         return saldo;
     }
-  
-
-//#endregion
+    public Date getDataAbertura() {
+        return dataAbertura;
+    }
+    public void setDataAbertura(Date dataAbertura) {
+        this.dataAbertura = dataAbertura;
+    }
     
+    
+//#endregion
+
 //#region metodos
 
 public void despositar(Double valor){
@@ -68,7 +78,7 @@ public void despositar(Double valor){
 }
 
 public void sacar(Double valor){
-
+    
     // verifica se o saldo é menor que o valor retirado
     if(valor>this.saldo){
         // caso seja menor tras a execessão abaixo throw new
