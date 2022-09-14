@@ -1,18 +1,19 @@
 package src.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
 
 public abstract class ContaBancaria {
 
    //#region atributo
-    private String agencia; 
-    private String conta;
-    private Integer digito;
-    private Double saldo;
-    private Double VALOR_MINIMO_DEPOSITO =10.0;
-    private Date dataAbertura;
-
+    protected String agencia; 
+    protected String conta;
+    protected Integer digito;
+    protected Double saldo;
+    protected Double VALOR_MINIMO_DEPOSITO =10.0;
+    protected Date dataAbertura;
+    protected ArrayList<Movimentacao> movimentacoes;
 //#endregion
     
     //#region Construtores
@@ -25,7 +26,10 @@ public abstract class ContaBancaria {
         this.digito = digito;
         this.saldo = saldoInicial;
         this.dataAbertura = new Date();
-        
+        //deve ser instanciado, caso contrario não entra e dará nullpointException
+        this.movimentacoes = new ArrayList<Movimentacao>();
+        Movimentacao movimentacao = new Movimentacao("Abertura de contra", saldoInicial);
+        this.movimentacoes.add(movimentacao);
     }
     
     //#endregion
@@ -75,9 +79,12 @@ public void despositar(Double valor){
     }else{
         throw new InputMismatchException("valor de deposito é muito baixo!! R$10.0 ");
     }
+    // extrato
+    Movimentacao movimentacao= new Movimentacao("Deposito", valor);
+    this.movimentacoes.add(movimentacao);
 }
 
-public void sacar(Double valor){
+public Double sacar(Double valor){
     
     // verifica se o saldo é menor que o valor retirado
     if(valor>this.saldo){
@@ -88,7 +95,11 @@ public void sacar(Double valor){
         this.saldo -=valor;
         
     }
+        Movimentacao movimentacao= new Movimentacao("sacar", valor);
+        this.movimentacoes.add(movimentacao);
 
+        return valor;
+        
 
 }
 
@@ -100,6 +111,12 @@ public void transferir(Double valor, ContaBancaria contaDestino){
     contaDestino.despositar(valor);
 
 }
+
+public void imprimirExtrato() {
+    // TODO Auto-generated method stub
+    
+}
+
 
 
 

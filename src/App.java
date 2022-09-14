@@ -1,6 +1,7 @@
 package src;
 
 import src.model.ContaCorrente;
+import src.model.Movimentacao;
 import src.utils.DataUtil;
 
 public class App {
@@ -28,9 +29,18 @@ public class App {
         
         System.out.println(conta2.getDataAbertura());
 
-        DataUtil util = new DataUtil();
-        var formatado = util.converterDateParaDataEHora(conta2.getDataAbertura());
-        System.out.println(formatado);
         
+        var f1 = DataUtil.converterDateParaDataEHora(conta2.getDataAbertura());
+        var f2 = DataUtil.converterDateParaData(conta2.getDataAbertura());
+        var f3 = DataUtil.converterDateParaHora(conta2.getDataAbertura());
+        System.out.println(f1);
+        System.out.println(f2);
+        System.out.println(f3);
+        
+
+        Movimentacao m = new Movimentacao("saque", 100.0);
+        System.out.println(m);
+
+        conta.imprimirExtrato();
     }
 }
